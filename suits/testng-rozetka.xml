@@ -8,6 +8,7 @@
         <classes>
             <!--<class name="com.academy.automationpractice.AuthTests" />-->
             <class name="com.academy.rozetka.AuthTests" />
+            <!--<class name="com.academy.rozetka.FilterTests" />-->
         </classes>
     </test>
 

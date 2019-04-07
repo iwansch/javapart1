@@ -1,19 +1,35 @@
 package com.academy.rozetka;
 
+
 import com.academy.framework.BaseTest;
 import com.academy.rozetka.page.AuthFormPage;
 import com.academy.rozetka.page.MainPage;
 import com.academy.rozetka.page.UserPage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.apache.commons.io.FileUtils;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AuthTests extends BaseTest {
+
+    private final static Logger LOG = LogManager.getLogger(com.academy.automationpractice.AuthTests.class);
 
     protected String baseUrl = "https://rozetka.com.ua/ua/";
 
     @Test
     public void testSuccessAuth() throws InterruptedException {
         System.out.println("***Rozetka test Auth start***");
+        LOG.info("***Rozetka test Auth start***");
+        //LOG.error("Error Message Logged !!!", new NullPointerException("NullError"));
         driver.get(baseUrl);
 
         // 1 СПОСОБ
@@ -21,13 +37,13 @@ public class AuthTests extends BaseTest {
         String oldMessage = mainPage.getEnterLinkText();
         AuthFormPage authFormPage = mainPage.clickEnterLink();
 
-        authFormPage.enterLogin("oleg.kh81@gmail.com");
-        authFormPage.enterPassword("Qwerty123");
+        authFormPage.enterLogin("iwansch21@gmail.com");
+        authFormPage.enterPassword("Qwer1234");
         mainPage = (MainPage)authFormPage.submit(true);
 
         mainPage = mainPage.waitUntilLinkTextChanged(oldMessage);
         String userName = mainPage.getEnterLinkText();
-        Assert.assertEquals(userName, "Oleg");
+        Assert.assertEquals(userName, "Ivan");
 
         /// Разлогиниться и выполнить проверку
         Thread.sleep(2000);
@@ -45,6 +61,19 @@ public class AuthTests extends BaseTest {
         Thread.sleep(2000);
 
         ///
+
+        ///2
+        Date dateNow = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("hh_mm_ss");
+        String fileName = format.format(dateNow) + ".png";
+
+        File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(screenshot, new File("data/screenshots " + fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ///2
 
 //        // 2 СПОСОБ
 //        MainPage mainPage = new MainPage(driver);

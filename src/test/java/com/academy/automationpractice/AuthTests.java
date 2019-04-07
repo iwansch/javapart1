@@ -1,6 +1,9 @@
 package com.academy.automationpractice;
 
 import com.academy.automationpractice.model.AuthData;
+import com.academy.framework.BaseTest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -21,12 +24,15 @@ import java.util.concurrent.TimeUnit;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
-    public class AuthTests {
+    public class AuthTests extends BaseTest {
+
+        private final static Logger LOG = LogManager.getLogger(AuthTests.class);
+
         private WebDriver driver;
         private String baseUrl;
 
-        private String errorMessageCssLocator = "#center_column > div.alert.alert-danger > ol > li";
-        private StringBuffer verificationErrors = new StringBuffer();
+        protected String errorMessageCssLocator = "#center_column > div.alert.alert-danger > ol > li";
+        protected StringBuffer verificationErrors = new StringBuffer();
 
         @Parameters("browser")
         @BeforeClass(alwaysRun = true)
